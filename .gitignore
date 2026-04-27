@@ -1,3 +1,4 @@
+auto
 /debug/
 /target/
 **/*.rs.bk
