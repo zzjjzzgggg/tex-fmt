@@ -34,7 +34,7 @@ pub fn format_file(
     let old_text = clean_text(old_text, args);
     let mut old_lines = zip(1.., old_text.lines());
 
-    // Initialise
+    // Initialize
     let mut state = State::new();
     let mut queue: Vec<(usize, String)> = vec![];
     let mut new_text = String::with_capacity(2 * old_text.len());
@@ -85,8 +85,8 @@ pub fn format_file(
                     line = this_line.to_string();
                 }
 
-                // Calculate the indent based on the current state
-                // and the patterns in the line.
+                // Calculate the indent based on the current state and the
+                // patterns in the line.
                 let indent = calculate_indent(
                     &line,
                     &mut temp_state,

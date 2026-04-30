@@ -207,7 +207,7 @@ pub fn apply_wrap<'a>(
     match wrap_point {
         Some(p)
             if {
-                // caluculate line visual length if wrap_by_visual_len is enabled
+                // calculate line visual length if wrap_by_visual_len is enabled
                 (if args.wrap_by_visual_len {
                     line.get(..=p)
                         .map_or(0, unicode_width::UnicodeWidthStr::width)
