@@ -74,8 +74,8 @@ pub fn format_file(
                 &verbatims_begin,
                 &verbatims_end,
             ) {
-                // Check if the line should be split because of a pattern
-                // that should begin on a new line.
+                // Check if the line should be split because of a pattern that
+                // should begin on a new line.
                 if subs::needs_split(&line, &pattern) {
                     // Split the line into two...
                     let (this_line, next_line) =
@@ -105,8 +105,8 @@ pub fn format_file(
                     usize::try_from(indent.visual * args.tabsize as i8)
                         .expect("Visual indent is non-negative.");
 
-                // Wrap the line before applying the indent, and loop back
-                // if the line needed wrapping.
+                // Wrap the line before applying the indent, and loop back if
+                // the line needed wrapping.
                 if needs_wrap(
                     line.trim_start(),
                     indent_length,
@@ -246,6 +246,8 @@ pub struct State {
     pub linum_first_negative_indent: Option<usize>,
     /// Table status of the current line
     pub table: Table,
+    /// Whether the current line is inside a no-indent-env (disables delimiter-based indent tracking)
+    pub inside_no_indent_env: bool,
 }
 
 impl State {
@@ -261,6 +263,7 @@ impl State {
             linum_last_zero_indent: 1,
             linum_first_negative_indent: None,
             table: Table::new(),
+            inside_no_indent_env: false,
         }
     }
 }

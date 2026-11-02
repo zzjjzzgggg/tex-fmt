@@ -149,7 +149,14 @@ fn get_indent(
     );
     let mut back =
         get_back(line, pattern, state, lists_end, no_indent_envs_end);
-    let diff_back_delim = get_diff_back_delim(line);
+    // ponytail: skip delimiter-based indent tracking inside no-indent-envs
+    // (colspecs like X[.8,c] and \SetCell[c=6]{} would otherwise unbalance
+    //  the {}/[] counter and produce spurious "Indent is negative" warnings)
+    let diff_back_delim = if state.inside_no_indent_env {
+        (0, 0)
+    } else {
+        get_diff_back_delim(line)
+    };
     diff += diff_back_delim.0;
     back += diff_back_delim.1;
     let actual = prev_indent.actual + diff;
@@ -178,6 +185,18 @@ pub fn calculate_indent(
     // (if there is one) to ignore diffs from characters in there.
     let comment_index = find_comment_index(line, pattern);
     let line_strip = remove_comment(line, comment_index);
+
+    // Toggle inside_no_indent_env tracking before computing indent
+    if pattern.contains_env_begin && line.contains(ENV_BEGIN) {
+        if no_indent_envs_begin.iter().any(|r| line.contains(r)) {
+            state.inside_no_indent_env = true;
+        }
+    } else if pattern.contains_env_end && line.contains(ENV_END) {
+        if no_indent_envs_end.iter().any(|r| line.contains(r)) {
+            state.inside_no_indent_env = false;
+        }
+    }
+
     let mut indent = get_indent(
         line_strip,
         &state.indent,

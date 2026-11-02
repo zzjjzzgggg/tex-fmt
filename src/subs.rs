@@ -60,9 +60,9 @@ pub fn needs_split(line: &str, pattern: &Pattern) -> bool {
 
     // If we're not ignoring and we've matched an environment ...
     if contains_splittable_env {
-        // ... return `true` if the comment index is `None`
-        // (which implies the split point must be in text), otherwise
-        // compare the index of the comment with the split point.
+        // ... return `true` if the comment index is `None` (which implies the
+        // split point must be in text), otherwise compare the index of the
+        // comment with the split point.
         find_comment_index(line, pattern).is_none_or(|comment_index| {
             if regexes::RE_SPLITTING_SHARED_LINE_CAPTURE
                 .captures(line)

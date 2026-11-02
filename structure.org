@@ -1,0 +1,9 @@
+bin.rs:    main()
+
+format.rs: run(&args)
+           text = read(file)
+           new_text = format_file(&text)
+           (this_line, next_line) = subs::split_line(&line)
+
+wrap.rs:   apply_wrap(&line)
+           find_wrap_point(&line)

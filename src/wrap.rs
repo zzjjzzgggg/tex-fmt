@@ -160,8 +160,7 @@ fn find_wrap_point(
         if is_wrap_point(i_byte, c, prev_c, next_c, inside_verb, line_len, args)
             && after_non_percent
         {
-            // Get index of the byte after which
-            // line break will be inserted.
+            // Get index of the byte after which line break will be inserted.
             // Note this may not be a valid char index.
             let wrap_byte = i_byte + c.len_utf8() - 1;
             // Don't wrap here if this is the end of the line anyway
@@ -169,8 +168,8 @@ fn find_wrap_point(
                 wrap_point = Some(wrap_byte);
             }
         }
-        // Unlike English,
-        // a CJK character can be both a wrap point and a non-% character
+        // Unlike English, a CJK character can be both a wrap point and a non-%
+        // character
         if c != '%' {
             after_non_percent = true;
         }

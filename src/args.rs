@@ -177,8 +177,8 @@ impl Default for OptionArgs {
             files: vec![],
             recursive: Some(false),
             format_tables: Some(false),
-            wrap_by_visual_len: Some(false),
-            wrap_cjk: Some(false),
+            wrap_by_visual_len: Some(true),
+            wrap_cjk: Some(true),
         }
     }
 }

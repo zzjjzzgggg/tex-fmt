@@ -1,11 +1,14 @@
 # tex-fmt.toml
-check = false
-print = false
+check = true
+print = true
 wrap = true
-wraplen = 80
+wraplen = 90
 tabsize = 2
 tabchar = "space"
 stdin = false
 verbosity = "warn"
 lists = []
 no-indent-envs = []
+wrap-chars = [",", "，", "。", "：", "；", "？", "！"]
+wrap-by-visual-len = true
+wrap-cjk = true

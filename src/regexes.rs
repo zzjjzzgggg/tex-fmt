@@ -17,7 +17,7 @@ pub const ENV_END: &str = "\\end{";
 pub const EXTENSIONS: [&str; 4] = ["tex", "bib", "sty", "cls"];
 
 /// Match a LaTeX \verb|...|
-pub const VERBS: [&str; 3] = ["\\verb|", "\\verb+", "\\mintinline"];
+pub const VERBS: [&str; 4] = ["\\verb|", "\\verb+", "\\mintinline", "\\Verb|"];
 
 /// Regex matches for sectioning commands
 const SPLITTING: [&str; 6] = [
@@ -30,8 +30,18 @@ const SPLITTING: [&str; 6] = [
 ];
 
 /// Match table commands
-pub const TABLES_BEGIN: [&str; 2] = ["\\begin{tabular}", "\\begin{tabularx}"];
-pub const TABLES_END: [&str; 2] = ["\\end{tabular}", "\\end{tabularx}"];
+pub const TABLES_BEGIN: [&str; 4] = [
+    "\\begin{tabular}",
+    "\\begin{tabularx}",
+    "\\begin{tblr}",
+    "\\begin{longtblr}",
+];
+pub const TABLES_END: [&str; 4] = [
+    "\\end{tabular}",
+    "\\end{tabularx}",
+    "\\end{tblr}",
+    "\\end{longtblr}",
+];
 
 // A static `String` which is a regex to match any of [`SPLITTING_COMMANDS`].
 static SPLITTING_STRING: LazyLock<String> =
@@ -53,7 +63,7 @@ pub static RE_SPLITTING: LazyLock<RegexSet> =
 // Matches splitting commands with non-whitespace characters before it.
 pub static RE_SPLITTING_SHARED_LINE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
-        [r"(:?\S.*?)", "(:?", SPLITTING_STRING.as_str(), ".*)"]
+        [r"(?:\S.*?)", "(?:", SPLITTING_STRING.as_str(), ".*)"]
             .concat()
             .as_str(),
     )
